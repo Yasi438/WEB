@@ -11,8 +11,6 @@ app.use('/api/users', Routing);
 
 
 
-
-
 // home page;
 app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/index.html'))
@@ -29,9 +27,6 @@ app.get('/login', (req,res)=>{
 app.get('/profile', (req,res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/profile.html'));
 })
-
-
-
 
 
 const PORT=3000;
