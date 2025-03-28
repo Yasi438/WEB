@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    const messageDiv = document.getElementById('message');
-    const profileDiv = document.getElementById('profileData');
+    const usernameEl = document.getElementById('username');
+    const emailEl = document.getElementById('email');
+    const errorEl = document.getElementById('errorMsg');
 
+    // Protect route
     if (!token) {
-        messageDiv.textContent = 'You must be logged in to view this page.';
+        errorEl.textContent = 'Unauthorized. Please log in.';
         return;
     }
 
@@ -16,17 +18,52 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (!res.ok) {
-            messageDiv.textContent = 'Unauthorized. Please log in again.';
-            return;
+            throw new Error('Invalid token or session expired');
         }
 
-        const data = await res.json();
-        profileDiv.innerHTML = `
-            <p><strong>Username:</strong> ${data.username}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-        `;
+        const user = await res.json();
+        usernameEl.textContent = user.username;
+        emailEl.textContent = user.email;
     } catch (err) {
-        console.error('Error fetching profile:', err);
-        messageDiv.textContent = 'Error loading profile.';
+        console.error('Profile fetch failed:', err);
+        errorEl.textContent = 'Session expired. Please log in again.';
+        setTimeout(() => {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }, 1500);
     }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    });
+
+    // Chat
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
+
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = chatInput.value.trim();
+        if (message) {
+            const userMsg = document.createElement('p');
+            userMsg.className = 'text-gray-800 font-semibold';
+            userMsg.textContent = `You: ${message}`;
+            chatBox.appendChild(userMsg);
+
+            setTimeout(() => {
+                const aiMsg = document.createElement('p');
+                aiMsg.className = 'text-gray-600';
+                aiMsg.textContent = `AI: Thanks for your message! I'm here to help with trading advice.`;
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+
+            chatInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    });
 });

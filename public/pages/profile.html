@@ -1,23 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - TradeRiser</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-xl mx-auto bg-white shadow-md rounded p-6">
-        <h2 class="text-2xl font-bold mb-4">User Profile</h2>
-        <div id="message" class="text-red-600 mb-4"></div>
-        <div id="profileData" class="space-y-2"></div>
-        <button onclick="logout()" class="mt-6 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
+<body class="bg-gray-100 font-sans">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-gray-800">TradeRiser</h1>
+      <div class="space-x-4">
+        <a href="#" class="text-gray-600 hover:text-blue-500">Home</a>
+        <a href="#" class="text-gray-600 hover:text-blue-500">Portfolio</a>
+        <a href="#" class="text-gray-600 hover:text-blue-500">Market</a>
+        <a href="#" id="logoutBtn" class="text-gray-600 hover:text-red-500 font-semibold">Logout</a>
+      </div>
     </div>
-    <script>
-        function logout() {
-            localStorage.removeItem('token');
-            window.location.href = '/login';
-        }
-    </script>
-    <script src="../scripts/profile.js"></script>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Left Column -->
+    <div class="md:col-span-1">
+      <!-- Profile Info -->
+      <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Profile</h2>
+        <p class="text-gray-600"><strong>Username:</strong> <span id="username">Loading...</span></p>
+        <p class="text-gray-600"><strong>Email:</strong> <span id="email">Loading...</span></p>
+        <p id="errorMsg" class="text-red-500 text-sm mt-2"></p>
+      </div>
+
+      <!-- Chat -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Chat with AI</h3>
+        <div id="chat-box" class="h-48 overflow-y-auto bg-gray-50 p-3 rounded mb-4">
+          <p class="text-gray-600">AI: Hello! How can I assist you with trading today?</p>
+        </div>
+        <form id="chat-form">
+          <input id="chat-input" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2" type="text" placeholder="Type your message..." />
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="md:col-span-2">
+      <!-- Trade History -->
+      <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Trade History</h3>
+        <!-- Table (mock data for now) -->
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b">
+              <th class="py-2 text-gray-700">Date</th>
+              <th class="py-2 text-gray-700">Stock</th>
+              <th class="py-2 text-gray-700">Action</th>
+              <th class="py-2 text-gray-700">Price</th>
+              <th class="py-2 text-gray-700">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 text-gray-600">2025-03-27</td>
+              <td class="py-2 text-gray-600">AAPL</td>
+              <td class="py-2 text-green-500">Buy</td>
+              <td class="py-2 text-gray-600">$150.00</td>
+              <td class="py-2 text-gray-600">10</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 text-gray-600">2025-03-26</td>
+              <td class="py-2 text-gray-600">TSLA</td>
+              <td class="py-2 text-red-500">Sell</td>
+              <td class="py-2 text-gray-600">$900.00</td>
+              <td class="py-2 text-gray-600">5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Watchlist -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Stock Watchlist</h3>
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b">
+              <th class="py-2 text-gray-700">Stock</th>
+              <th class="py-2 text-gray-700">Price</th>
+              <th class="py-2 text-gray-700">Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 text-gray-600">NVDA</td>
+              <td class="py-2 text-gray-600">$120.50</td>
+              <td class="py-2 text-green-500">+2.3%</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 text-gray-600">GOOGL</td>
+              <td class="py-2 text-gray-600">$2750.00</td>
+              <td class="py-2 text-red-500">-1.1%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 mt-8">
+    <div class="max-w-6xl mx-auto text-center text-gray-600">
+      <p>© 2025 TradeRiser. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../scripts/profile.js"></script>
 </body>
 </html>
