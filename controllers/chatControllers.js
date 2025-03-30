@@ -9,9 +9,9 @@ const chatWithAI = async (req, res) => {
 
   try {
     const response = await axios.post('http://localhost:11434/api/generate', {
-      model: 'mistral', // or 'mistral', 'llama2', etc.
+      model: 'mistral', 
       prompt: message,
-      stream: false // disable streaming for now
+      stream: false 
     });
 
     const reply = response.data?.response || 'No response received from model.';
