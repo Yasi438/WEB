@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Market - TradeRiser</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-gray-800">TradeRiser</h1>
+      <div class="space-x-4">
+        <a href="/profile" class="text-gray-600 hover:text-blue-500">Home</a>
+        <a href="profile.html" class="text-gray-600 hover:text-blue-500">Profile</a>
+        <a href="#" class="text-gray-600 hover:text-blue-500">Market</a>
+        <a href="#" class="text-gray-600 hover:text-blue-500">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto py-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Trade Stocks</h2>
+
+    <!-- Stock Search -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+      <form id="stock-search-form" class="flex space-x-4">
+        <input id="stock-symbol" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Enter stock symbol (e.g., AAPL)" />
+        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600">Search</button>
+      </form>
+    </div>
+
+    <!-- Stock Details -->
+    <div id="stock-details" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Stock Information</h3>
+      <p><strong>Symbol:</strong> <span id="stock-symbol-display"></span></p>
+      <p><strong>Price:</strong> <span id="stock-price"></span></p>
+      <p><strong>Change:</strong> <span id="stock-change"></span></p>
+
+      <form id="trade-form" class="mt-4">
+        <label for="quantity" class="block text-gray-700 text-sm font-semibold mb-2">Quantity</label>
+        <input id="quantity" class="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" type="number" min="1" placeholder="1" required />
+        <div class="flex space-x-4">
+          <button type="button" id="buy-btn" class="bg-green-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600">Buy</button>
+          <button type="button" id="sell-btn" class="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600">Sell</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 mt-8">
+    <div class="max-w-6xl mx-auto text-center text-gray-600">
+      <p>© 2025 TradeRiser. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JS (Modular) -->
+  <script src="../scripts/market.js"></script>
+</body>
+</html>

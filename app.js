@@ -1,7 +1,8 @@
 const express=require('express');
 const path=require('path');
-const Routing=require('./routers/router')
-const chatrout=require('./routers/router')
+const Routing=require('./routers/router');
+const chatrout=require('./routers/router');
+const  marketRouter=require('./routers/router');
 
 const app=express();
 // path 
@@ -9,6 +10,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/users', Routing);
 app.use('/api', chatrout);
+app.use('/api/market', marketRouter);
 
 
 
@@ -28,6 +30,9 @@ app.get('/login', (req,res)=>{
 // user profile page;
 app.get('/profile', (req,res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/profile.html'));
+})
+app.get('/market', (req,res)=>{
+    res.sendFile(path.join(__dirname, 'public/pages/market.html'));
 })
 
 
