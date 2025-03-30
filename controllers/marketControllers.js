@@ -42,7 +42,42 @@ const postTrade = async (req, res) => {
   }
 };
 
+// GET /market/stock/:symbol/history
+const getStockHistory = async (req, res) => {
+  const { symbol } = req.params;
+
+  try {
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setDate(today.getDate() - 30);
+
+    const history = await yahooFinance.historical(symbol, {
+      period1: oneMonthAgo,
+      period2: today,
+      interval: '1d'
+    });
+
+    if (!history.length) {
+      return res.status(404).json({ message: 'No data found for this symbol.' });
+    }
+
+    const chartData = history.map((point) => ({
+      date: point.date.toISOString().split('T')[0],
+      close: point.close, 
+    }));
+
+    res.json(chartData);
+  } catch (error) {
+    console.error('History fetch error:', error);
+    res.status(500).json({ message: 'Error fetching historical data.' });
+  }
+};
+
+
+
+
 module.exports = {
   getStockInfo,
-  postTrade
+  postTrade,
+  getStockHistory
 };
