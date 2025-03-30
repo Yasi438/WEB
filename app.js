@@ -1,12 +1,14 @@
 const express=require('express');
 const path=require('path');
 const Routing=require('./routers/router')
+const chatrout=require('./routers/router')
 
 const app=express();
 // path 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/users', Routing);
+app.use('/api', chatrout);
 
 
 

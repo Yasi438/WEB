@@ -1,0 +1,4 @@
+Ollama:
+1-downlaod and install ollama for whatever operation system you have 
+2- pull the model you like to test, using this command " ollama pull (model name)" for now i used mystril 
+3- run it  using this command " ollama run mistral" 
