@@ -24,23 +24,43 @@ const getStockInfo = async (req, res) => {
 // POST /market/trade
 const postTrade = async (req, res) => {
   const { symbol, action, quantity } = req.body;
-  const userId = 1; // TODO: Replace with user ID from session/token
+  const userId = 1; // assuming you already know the logged-in user's ID
 
   try {
     const quote = await yahooFinance.quote(symbol);
     const price = quote.regularMarketPrice;
 
+    //  If the action is "sell", check if user has enough
+    if (action === 'sell') {
+      const [rows] = await db.query(
+        `SELECT 
+           SUM(CASE WHEN action = 'buy' THEN quantity ELSE -quantity END) AS net_quantity 
+         FROM trades 
+         WHERE user_id = ? AND symbol = ?`,
+        [userId, symbol]
+      );
+
+      const netOwned = rows[0].net_quantity || 0;
+
+      if (netOwned < quantity) {
+        return res.status(400).json({ message: 'You do not own enough stock to sell.' });
+      }
+    }
+
+    // Proceed to insert trade
     await db.query(
       'INSERT INTO trades (user_id, symbol, action, price, quantity) VALUES (?, ?, ?, ?, ?)',
       [userId, symbol, action, price, quantity]
     );
 
-    res.json({ message: 'Trade recorded' });
+    res.json({ message: `${action} successful!` });
   } catch (error) {
     console.error('Trade error:', error);
     res.status(500).json({ message: 'Error processing trade' });
   }
 };
+
+
 
 // GET /market/stock/:symbol/history
 const getStockHistory = async (req, res) => {

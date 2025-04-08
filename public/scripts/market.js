@@ -56,11 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   
       try {
-        const response = await fetch('http://localhost:3000/api/market/trade', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ symbol, action, quantity })
-        });
+        const token = localStorage.getItem('token');
+
+const response = await fetch('http://localhost:3000/api/market/trade', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`  // ✅ Add this line
+  },
+  body: JSON.stringify({ symbol, action, quantity })
+});
+
   
         const data = await response.json();
         if (response.ok) {
