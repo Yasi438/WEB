@@ -13,7 +13,7 @@ const getStockInfo = async (req, res) => {
 
     res.json({
       price: quote.regularMarketPrice.toFixed(2),
-      change: ((quote.regularMarketChangePercent || 0) * 100).toFixed(2)
+      change: ((quote.regularMarketChangePercent || 0) * 1).toFixed(2)
     });
   } catch (error) {
     console.error('Yahoo Finance error:', error);
