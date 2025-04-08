@@ -77,9 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
         const labels = historyData.map(point => point.date);
         const prices = historyData.map(point => point.close);
-        if(response.ok){
-            symbolDisplay.textContent=symbol;
-        }
+
   
         if (stockChart) {
           stockChart.destroy();

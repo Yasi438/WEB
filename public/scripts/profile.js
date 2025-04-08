@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 🚪 Logout
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        window.location.href = '/index';
     });
 
     // 💬 AI Chat Logic

@@ -35,7 +35,6 @@ app.get('/market', (req,res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/market.html'));
 })
 
-
 const PORT=3000;
 app.listen(PORT, ()=>{
     console.log(`server is running in : localhost${PORT}`);

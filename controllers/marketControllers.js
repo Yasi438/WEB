@@ -63,7 +63,7 @@ const getStockHistory = async (req, res) => {
 
     const chartData = history.map((point) => ({
       date: point.date.toISOString().split('T')[0],
-      close: point.close, 
+      close: point.close
     }));
 
     res.json(chartData);
