@@ -38,6 +38,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/index';
     });
 
+    // Add below your logout logic
+async function loadWatchlist() {
+    const watchlistBody = document.getElementById('watchlist-body');
+  
+    try {
+      const res = await fetch('/api/market/watchlist', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!res.ok) throw new Error('Failed to fetch watchlist');
+  
+      const data = await res.json();
+      watchlistBody.innerHTML = ''; // clear previous rows
+  
+      data.slice(0, 4).forEach(stock => {
+        const row = document.createElement('tr');
+  
+        row.innerHTML = `
+          <td class="py-2 text-gray-600">${stock.symbol}</td>
+          <td class="py-2 text-gray-600">$${parseFloat(stock.price).toFixed(2)}</td>
+          <td class="py-2 ${stock.change.startsWith('-') ? 'text-red-500' : 'text-green-500'}">${stock.change}</td>
+        `;
+  
+        watchlistBody.appendChild(row);
+      });
+  
+    } catch (err) {
+      console.error('Watchlist load error:', err);
+    }
+  }
+  
+  // Call it
+  loadWatchlist();
+  
+
     // 💬 AI Chat Logic
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');

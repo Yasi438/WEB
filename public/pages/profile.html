@@ -50,7 +50,6 @@
       <!-- Trade History -->
       <div class="bg-white p-6 rounded-lg shadow-md mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Trade History</h3>
-        <!-- Table (mock data for now) -->
         <table class="w-full text-left">
           <thead>
             <tr class="border-b">
@@ -91,17 +90,8 @@
               <th class="py-2 text-gray-700">Change</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="border-b">
-              <td class="py-2 text-gray-600">NVDA</td>
-              <td class="py-2 text-gray-600">$120.50</td>
-              <td class="py-2 text-green-500">+2.3%</td>
-            </tr>
-            <tr class="border-b">
-              <td class="py-2 text-gray-600">GOOGL</td>
-              <td class="py-2 text-gray-600">$2750.00</td>
-              <td class="py-2 text-red-500">-1.1%</td>
-            </tr>
+          <tbody id="watchlist-body">
+            <!-- Dynamic rows will be inserted here -->
           </tbody>
         </table>
       </div>

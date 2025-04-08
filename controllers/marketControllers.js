@@ -72,6 +72,63 @@ const getStockHistory = async (req, res) => {
     res.status(500).json({ message: 'Error fetching historical data.' });
   }
 };
+const addToWatchlist = async (req, res) => {
+  const { symbol, price, change } = req.body;
+  const userId = req.user?.id || 1; 
+
+  if (!symbol || !price || !change) {
+    return res.status(400).json({ message: 'Missing data' });
+  }
+
+  try {
+    // Remove existing if already present
+    await db.query(
+      'DELETE FROM watchlist WHERE user_id = ? AND symbol = ?',
+      [userId, symbol]
+    );
+
+    // Insert new stock
+    await db.query(
+      'INSERT INTO watchlist (user_id, symbol, price, `change`) VALUES (?, ?, ?, ?)',
+      [userId, symbol, price, change]
+    );
+
+    // Keep only 4 recent for the user
+    await db.query(
+      `DELETE FROM watchlist 
+       WHERE user_id = ? AND id NOT IN (
+         SELECT id FROM (
+           SELECT id FROM watchlist 
+           WHERE user_id = ? 
+           ORDER BY added_at DESC 
+           LIMIT 4
+         ) AS temp
+       )`,
+      [userId, userId]
+    );
+
+    res.json({ message: `${symbol} added to watchlist.` });
+  } catch (error) {
+    console.error('Add to watchlist error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+const getWatchlist = async (req, res) => {
+  const userId = req.user?.id || 1;
+
+  try {
+    const [rows] = await db.query(
+      'SELECT symbol, price, `change` FROM watchlist WHERE user_id = ? ORDER BY added_at DESC LIMIT 4',
+      [userId]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Get watchlist error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
 
 
@@ -79,5 +136,7 @@ const getStockHistory = async (req, res) => {
 module.exports = {
   getStockInfo,
   postTrade,
-  getStockHistory
+  getStockHistory,
+  addToWatchlist,
+  getWatchlist
 };
