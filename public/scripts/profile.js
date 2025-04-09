@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const emailEl = document.getElementById('email');
     const errorEl = document.getElementById('errorMsg');
     const logoutBtn = document.getElementById('logoutBtn');
+    
 
     // 🛡️ Protect route
     if (!token) {
@@ -74,6 +75,35 @@ async function loadWatchlist() {
   // Call it
   loadWatchlist();
   
+  // load trades list
+  async function loadTradesList() {
+    const tradeslistBody = document.getElementById('trades-list-body');
+  
+    try {
+      const res = await fetch('/api/market/trade', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!res.ok) throw new Error('Failed to fetch trades list');
+  
+      const data = await res.json();
+      tradeslistBody.innerHTML = ''; // clear previous rows
+  
+      data.slice(0, 4).forEach(trade => {
+        const {trade_date, symbol, action, price, quantity} = trade;
+        const row = createTradeRow(trade_date, symbol, action, price, quantity)
+  
+        tradeslistBody.appendChild(row);
+      });
+  
+    } catch (err) {
+      console.error('trades list load error:', err);
+    }
+  }
+
+  loadTradesList();
 
     // 💬 AI Chat Logic
     const chatForm = document.getElementById('chat-form');
@@ -119,3 +149,21 @@ async function loadWatchlist() {
         }
     });
 });
+
+
+const createTradeRow = (tradeDate, symbol, action, price, quantity)=>{
+  const tableRow = document.createElement("tr");
+  const date = new Date(tradeDate);
+  const year = date.getFullYear().toString().padStart(4, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  const formattedDate = `${month}/${day}/${year}`
+  tableRow.innerHTML = `
+    <td class="py-2 text-gray-600">${formattedDate}</td>
+    <td class="py-2 text-gray-600">${symbol}</td>
+    <td class="py-2 text-${action==="buy"?"green":"red"}-500">${action}</td>
+    <td class="py-2 text-gray-600">$${price}</td>
+    <td class="py-2 text-gray-600">${quantity}</td>
+  `
+  return tableRow;
+};
