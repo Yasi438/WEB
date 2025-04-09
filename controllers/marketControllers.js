@@ -21,6 +21,23 @@ const getStockInfo = async (req, res) => {
   }
 };
 
+// GET /market/trade
+const getTrades = async (req,res) =>{
+  const userId = 1; // TODO: Replace with user ID from session/token
+
+  try{
+    const [rows] = await db.query(
+      'SELECT * FROM trades WHERE user_id = ? ORDER BY trade_date DESC LIMIT 4',
+        [userId]
+    );
+    res.json(rows);
+  }
+  catch(error){
+    console.error('Get trades error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // POST /market/trade
 const postTrade = async (req, res) => {
   const { symbol, action, quantity } = req.body;
@@ -155,6 +172,7 @@ const getWatchlist = async (req, res) => {
 
 module.exports = {
   getStockInfo,
+  getTrades,
   postTrade,
   getStockHistory,
   addToWatchlist,
