@@ -2,7 +2,7 @@ const express=require('express');
 const {registerUser, loginUser,getProfile}=require('../controllers/userController');
 const verifyToken=require('../middleware/middle');
 const {chatWithAI}=require('../controllers/chatControllers')
-const{getStockInfo, getTrades, postTrade, getStockHistory,addToWatchlist, getWatchlist}=require('../controllers/marketControllers')
+const{getStockInfo, getTrades, postTrade, getStockHistory,addToWatchlist, getWatchlist,getStockHistoryForchat}=require('../controllers/marketControllers')
 
 
 const router=express.Router();
@@ -15,6 +15,7 @@ router.get('/stock/:symbol', getStockInfo);
 router.get('/trade',getTrades);
 router.post('/trade', postTrade);
 router.get('/stock/:symbol/history', getStockHistory);
+router.get('/stock/:symbol/historychat', getStockHistoryForchat);
 router.post('/watchlist/add', verifyToken, addToWatchlist);
 router.get('/watchlist', verifyToken, getWatchlist);
 
