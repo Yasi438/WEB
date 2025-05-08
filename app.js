@@ -32,6 +32,9 @@ app.get('/login', (req,res)=>{
 app.get('/profile', (req,res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/profile.html'));
 })
+app.get('/portfolio', (req,res)=>{
+    res.sendFile(path.join(__dirname,'public/pages/portfolio.html'))
+})
 app.get('/market', (req,res)=>{
     res.sendFile(path.join(__dirname, 'public/pages/market.html'));
 })

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio - TradeRiser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-white shadow-md p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-gray-800">TradeRiser</h1>
+      <a href="/profile" class="text-blue-500 font-medium">Back to Profile</a>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto py-8 px-4">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Trade History</h2>
+    <div class="overflow-x-auto rounded shadow-md">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-100 font-bold text-gray-800">
+          <tr>
+            <th class="py-2 px-4">Trade ID</th>
+            <th class="py-2 px-4">Symbol</th>
+            <th class="py-2 px-4">Quantity</th>
+            <th class="py-2 px-4">Bought Price</th>
+            <th class="py-2 px-4">Current Price</th>
+            <th class="py-2 px-4">PnL</th>
+          </tr>
+        </thead>
+        <tbody id="portfolio-body" class="text-center">
+          <!-- JS will fill this -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../scripts/portfolio.js"></script>
+</body>
+</html>

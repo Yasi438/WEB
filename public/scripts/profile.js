@@ -120,14 +120,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await res.json();
         const priceRange = data.map(point => point.close).filter(p => p != null);
 
-        
+
         const message = `symbol: ${symbol}
-price_range: [${priceRange.join(', ')}]
-intention: ${intentionSentence}
-risk_tolerance: ${riskVal}
-strategy: Combine RSI 5 and SMA 10 to identify the trend direction, calulate on those price points provide and 
-Give me your final judgment to buy, sell, or take no action.
-Summarize in one paragraph.`;
+        price_range: [${priceRange.join(', ')}]
+        intention: ${intentionSentence}
+        risk_tolerance: ${riskVal}
+        strategy: Combine RSI 5 and SMA 10 to identify the trend direction,
+        calulate on those price points provide and 
+        Give me your final judgment to buy, sell, or take no action.
+        Summarize in one paragraph.`;
 
         await sendToAI(message);
       } catch (err) {

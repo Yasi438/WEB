@@ -3,6 +3,7 @@ const {registerUser, loginUser,getProfile}=require('../controllers/userControlle
 const verifyToken=require('../middleware/middle');
 const {chatWithAI}=require('../controllers/chatControllers')
 const{getStockInfo, getTrades, postTrade, getStockHistory,addToWatchlist, getWatchlist,getStockHistoryForchat}=require('../controllers/marketControllers')
+const {getPortfolio}=require('../controllers/portfolioconrotller')
 
 
 const router=express.Router();
@@ -18,6 +19,7 @@ router.get('/stock/:symbol/history', getStockHistory);
 router.get('/stock/:symbol/historychat', getStockHistoryForchat);
 router.post('/watchlist/add', verifyToken, addToWatchlist);
 router.get('/watchlist', verifyToken, getWatchlist);
+router.get('/portfolio', verifyToken, getPortfolio);
 
 
 module.exports=router;
